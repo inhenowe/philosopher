@@ -44,10 +44,12 @@ typedef struct s_philo
 
 /*-------funtion of src-------*/
 //checkers
-t_bool	argcheck(int argc, char **spl, t_philo *data);
+t_bool		argcheck(int argc, char **spl, t_philo *data);
 
 //errors
-void	errorlog(char *error);
+void		errorlog(char *error);
 
+//Utilities
+long long	ft_atol(const char *str);
 
 #endif // !PHILOSOPHER_H

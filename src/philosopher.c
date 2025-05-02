@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
 
 	initdata(&data);
 	if (argcheck(argc - 1, argv + 1, &data))
-		exit(1);
+		exit(1);	
 }
 
 void	initdata(t_philo *data)
