@@ -17,7 +17,7 @@ static void		charge_nums(char **nums, t_philo *data);
 
 t_bool	argcheck(int argc, char **spl, t_philo *data)
 {
-	if (argc < 5 || argc > 5)
+	if (argc < 4 && argc > 5)
 		return (errorlog(MA1), TRUE);
 	if (is_real_num(spl, data))
 		return (errorlog(MA1), TRUE);
