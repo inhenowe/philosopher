@@ -19,10 +19,13 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdio.h>
 
 /*-------constants Utilities-------*/
 # define MA1 "Error\nPlease insert the data as follows: Philo:x Die:x Eat:x\
 Sleep:x Musteat:x"
+# define MA2 "Error\nPlease only positive numbers as values"
+# define MA3 "Error\nMore than 200 philosopher"
 
 /*-------enum Utilities-------*/
 typedef enum e_bool
@@ -36,6 +39,7 @@ typedef struct s_platon
 {
 	pthread_t		thread;
 	int				id;
+	int				eatCheck;
 	pthread_mutex_t	*r_fork;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*write;
@@ -58,7 +62,7 @@ typedef struct s_philo
 //checkers
 t_bool		argcheck(int argc, char **spl, t_philo *data);
 
-//errors
+//errors and free
 void		errorlog(char *error);
 
 //Utilities

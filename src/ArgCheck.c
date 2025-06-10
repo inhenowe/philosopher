@@ -17,10 +17,10 @@ static void		charge_nums(char **nums, t_philo *data);
 
 t_bool	argcheck(int argc, char **spl, t_philo *data)
 {
-	if (argc < 4 && argc > 5)
+	if (argc < 4 || argc > 5)
 		return (errorlog(MA1), TRUE);
 	if (is_real_num(spl, data))
-		return (errorlog(MA1), TRUE);
+		return (TRUE);
 	return (FALSE);
 }
 
@@ -32,10 +32,15 @@ static t_bool	is_real_num(char **nums, t_philo *data)
 	i = -1;
 	j = -1;
 	while (nums[++i])
+	{
+		j = -1;
 		while (nums[i][++j])
-			if ((nums[i][j] < '0' && nums[i][j] > '9') || nums[i][j]  == '-')
-				return (TRUE);
+			if (nums[i][j] < '0' || nums[i][j] > '9')
+				return (errorlog(MA2), TRUE);
+	}
 	charge_nums(nums, data);
+	if (data->numPhilo > 200)
+		return (errorlog(MA3), TRUE);
 	return (FALSE);
 }
 
@@ -45,5 +50,6 @@ static void	charge_nums(char **nums, t_philo *data)
 	data->timeDie_ms = ft_atol(nums[1]);
 	data->timeEat_ms =  ft_atol(nums[2]);
 	data->timeNap_ms = ft_atol(nums[3]);
-	data->MustEat =  ft_atol(nums[4]);
+	if (nums[4])
+		data->MustEat =  ft_atol(nums[4]);
 }
