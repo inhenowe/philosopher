@@ -1,12 +1,12 @@
-	/* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ArgCheck.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleortiz <aleortiz@student.42malaga.c      +#+  +:+       +#+        */
+/*   By: aleortiz <aleortiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 13:43:38 by aleortiz          #+#    #+#             */
-/*   Updated: 2025/04/30 10:04:39 by aleortiz         ###   ########.fr       */
+/*   Updated: 2025/07/02 15:56:09 by aleortiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,19 @@ static t_bool	is_real_num(char **nums, t_philo *data)
 				return (errorlog(MA2), TRUE);
 	}
 	charge_nums(nums, data);
-	if (data->numPhilo > 200)
+	if (data->num_philo > 200)
+		return (errorlog(MA3), TRUE);
+	if (data->num_philo == 0)
 		return (errorlog(MA3), TRUE);
 	return (FALSE);
 }
 
 static void	charge_nums(char **nums, t_philo *data)
 {
-	data->numPhilo = ft_atol(nums[0]);
-	data->timeDie_ms = ft_atol(nums[1]);
-	data->timeEat_ms =  ft_atol(nums[2]);
-	data->timeNap_ms = ft_atol(nums[3]);
+	data->num_philo = ft_atol(nums[0]);
+	data->time_die_ms = ft_atol(nums[1]);
+	data->time_eat_ms = ft_atol(nums[2]);
+	data->time_nap_ms = ft_atol(nums[3]);
 	if (nums[4])
-		data->MustEat =  ft_atol(nums[4]);
+		data->must_eat = ft_atol(nums[4]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utilities.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aleortiz <aleortiz@student.42malaga.c      +#+  +:+       +#+        */
+/*   By: aleortiz <aleortiz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 15:22:49 by aleortiz          #+#    #+#             */
-/*   Updated: 2025/04/29 15:23:01 by aleortiz         ###   ########.fr       */
+/*   Updated: 2025/07/03 11:52:30 by aleortiz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,35 @@ long long	ft_atol(const char *str)
 		ctu++;
 	}
 	return (num * simbolo);
+}
+
+unsigned long	get_time(void)
+{
+	struct timeval			tv;
+	unsigned long			now;
+
+	gettimeofday(&tv, NULL);
+	now = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (now);
+}
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	unsigned char		*c_dest;
+	unsigned const char	*c_src;
+	size_t				ctu_d;
+
+	c_dest = dest;
+	c_src = src;
+	ctu_d = 0;
+	if (!dest && !src && n > 0)
+		return ((void *) 0);
+	while (ctu_d < n)
+	{
+		c_dest[ctu_d] = c_src[ctu_d];
+		ctu_d++;
+	}
+	if (ctu_d < n)
+		c_dest[ctu_d] = '\0';
+	return (dest);
 }
