@@ -46,7 +46,7 @@ Sleep:x Musteat:x"
 /*-------mutex_5-------*/
 # define EA_C 0
 # define FULL 1
-# define Tms_EA 2
+# define T_EA 2
 # define SAVE 3
 # define FLAG 4
 

@@ -14,8 +14,8 @@
 
 void	activate_dead(t_philo *data, int i)
 {
-	if ((get_time() - mutexcopyi(&data->th[i].mutex_5[Tms_EA], data->th[i].time_eat))
-		>= (unsigned long)data->time_die_ms && !data->th[i].full)
+	if ((get_time() - data->th[i].time_eat) >= (unsigned long)data->time_die_ms 
+			&& !data->th[i].full)
 	{
 		mutextrue(&data->dead, &data->dead_man);	
  		mutexprint(&data->th[i], MS5);

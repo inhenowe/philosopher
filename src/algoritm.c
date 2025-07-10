@@ -85,9 +85,9 @@ static void	eating(t_platon *philo)
 	if (!mutexcopyb(&philo->data->dead ,philo->data->dead_man))
 		mutexprint(philo, MS2);
 	mutexiter(&philo->mutex_5[EA_C], &philo->eat_check);
-	pthread_mutex_lock(&philo->mutex_5[Tms_EA] );
+	pthread_mutex_lock(&philo->mutex_5[T_EA]);
 	philo->time_eat = get_time();
-	pthread_mutex_unlock(&philo->mutex_5[Tms_EA]);
+	pthread_mutex_unlock(&philo->mutex_5[T_EA]);
 	usleep(1000 * philo->data->time_eat_ms);
 	pthread_mutex_lock(&philo->mutex_5[SAVE]);
 	philo->save = FALSE;
@@ -109,6 +109,7 @@ void	*scan_cycle(void *param)
 
 	data = (t_philo *)param;
 	i = -1;
+	usleep(1000);
 	while (1)
 	{
 		i = -1;
@@ -117,7 +118,8 @@ void	*scan_cycle(void *param)
 			if (data->must_eat != -1)
 				activate_all_eat(data, i);
 			if (!mutexcopyb(&data->dead, data->dead_man) &&
-					!mutexcopyb(&data->th[i].mutex_5[FULL],  data->th[i].full))
+					!mutexcopyb(&data->th[i].mutex_5[FULL],  data->th[i].full) &&
+					!mutexcopyb(&data->th[i].mutex_5[SAVE],  data->th[i].save))
 				activate_dead(data, i);
 		}
 		if (mutexcopyb(&data->dead ,data->dead_man) ||
