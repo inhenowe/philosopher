@@ -43,16 +43,12 @@ Sleep:x Musteat:x"
 # define MS4 B_Y"%lu %i is thinking\n"R
 # define MS5 B_R"%lu %i died\n"R
 
-/*-------signals-code-------*/
-# define S1 0
-# define S2 1
-# define S3 2
-# define S4 3
-# define S5 4
-# define S6 5
-# define S7 6
-# define S8 7
-# define S9 8
+/*-------mutex_5-------*/
+# define EA_C 0
+# define FULL 1
+# define Tms_EA 2
+# define SAVE 3
+# define FLAG 4
 
 /*-------define_struct-------*/
 typedef struct s_philo	t_philo;
@@ -73,7 +69,9 @@ typedef struct s_platon
 	unsigned long	time_eat;
 	t_bool			full;
 	t_bool			check;
+	t_bool			save;
 	t_philo			*data;
+	pthread_mutex_t	*mutex_5;
 }	t_platon;
 
 /*-------struct_data_argu-------*/
@@ -91,7 +89,8 @@ typedef struct s_philo
 	t_platon		*th;
 	pthread_t		monitor;
 	pthread_mutex_t	*forks;
-	pthread_mutex_t	*signal;
+	pthread_mutex_t	write;
+	pthread_mutex_t	dead;
 }	t_philo;
 
 /*-------funtion_of_src-------*/
@@ -105,7 +104,7 @@ void			one_case(t_philo *data);
 void			*rutone(void *param);
 void			*routine(void *param);
 void			*scan_cycle(void *param);
-void			init_signals(t_philo *data);
+void			init_signals(pthread_mutex_t **mutex, int num);
 void			mutexiter(pthread_mutex_t *mutex, int *var);
 void			mutextrue(pthread_mutex_t *mutex, t_bool *var);
 t_bool			mutexcopyb(pthread_mutex_t *mutex, t_bool var);

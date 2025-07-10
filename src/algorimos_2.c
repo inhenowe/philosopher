@@ -14,9 +14,9 @@
 
 void	mutexprint(t_platon *phl, const char *msg)
 {
-	pthread_mutex_lock(&phl->data->signal[S1]);
+	pthread_mutex_lock(&phl->data->write);
 	printf(msg,  get_time() - phl->data->time, phl->id);
-	pthread_mutex_unlock(&phl->data->signal[S1]);
+	pthread_mutex_unlock(&phl->data->write);
 }
 
 void	mutexiter(pthread_mutex_t *mutex, int *var)

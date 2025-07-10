@@ -29,9 +29,6 @@ void	free_all(t_philo *data)
 	i = -1;
 	while (++i < data->num_philo)
 		pthread_mutex_destroy(&data->forks[i]);
-	i = -1;
-	while (++i < 9)
-		pthread_mutex_destroy(&data->signal[i]);
 	free(data->th);
 	free(data->forks);
 }

@@ -34,8 +34,9 @@ int	main(int argc, char *argv[])
 	else
 	{
 		data.time = get_time();
+		init_signals(&data.forks, data.num_philo);
 		init_philosophers(&data);
-		init_signals(&data);
+		pthread_create(&data.monitor, NULL, &scan_cycle, &data);
 		while (++i < data.num_philo)
 			pthread_join(data.th[i].thread, NULL);
 		pthread_join(data.monitor, NULL);
@@ -63,23 +64,20 @@ static void	init_philosophers(t_philo *data)
 	data->th = malloc(sizeof(t_platon) * data->num_philo);
 	if (!data->th)
 		return (errorlog("malloc"));
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philo);
-	if (!data->forks)
-		return (free(data->th), errorlog("malloc"));
-	while (++i < data->num_philo)
-		pthread_mutex_init(&data->forks[i], NULL);
-	i = -1;
+	pthread_mutex_init(&data->write, NULL);
+	pthread_mutex_init(&data->dead, NULL);
 	while (++i < data->num_philo)
 	{
+		init_signals(&data->th[i].mutex_5, 5);
 		data->th[i].id = i + 1;
 		data->th[i].eat_check = 0;
 		data->th[i].data = data;
 		data->th[i].full = FALSE;
 		data->th[i].check = FALSE;
+		data->th[i].save = FALSE;
 		data->th[i].time_eat = data->time;
 		pthread_create(&data->th[i].thread, NULL, &routine, &data->th[i]);
 	}
-	pthread_create(&data->monitor, NULL, &scan_cycle, &data);
 }
 
 // void	mute_all(t_philo *data)

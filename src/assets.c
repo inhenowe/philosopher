@@ -14,25 +14,24 @@
 
 void	activate_dead(t_philo *data, int i)
 {
-	if ((get_time() - data->th[i].time_eat) >= (unsigned long)data->time_die_ms
-		&& !data->th[i].full)
+	if ((get_time() - mutexcopyi(&data->th[i].mutex_5[Tms_EA], data->th[i].time_eat))
+		>= (unsigned long)data->time_die_ms && !data->th[i].full)
 	{
-		mutextrue(&data->signal[S9], &data->dead_man);
-		mutexprint(&data->th[i], MS5);
+		mutextrue(&data->dead, &data->dead_man);	
+ 		mutexprint(&data->th[i], MS5);
 	}
 }
 
 void	activate_all_eat(t_philo *data, int i)
 {
-	pthread_mutex_lock(&data->signal[S7]);
-	if (data->th[i].full && !data->th[i].check)
+	if (mutexcopyb(&data->th[i].mutex_5[FULL],  data->th[i].full) &&
+			!mutexcopyb(&data->th[i].mutex_5[FLAG],  data->th[i].check))
 	{
-		mutexiter(&data->signal[S4], &data->full_count);
-		mutextrue(&data->signal[S5], &data->th[i].check);
+		mutextrue(&data->th[i].mutex_5[FLAG], &data->th[i].check);
+		data->full_count++;
 	}
 	if (data->full_count == data->num_philo)
-		mutextrue(&data->signal[S6], &data->all_eat);
-	pthread_mutex_unlock(&data->signal[S7]);
+		data->all_eat = TRUE;
 }
 
 void	one_case(t_philo *data)
@@ -76,14 +75,14 @@ void	*rutone(void *param)
 	return (NULL);
 }
 
-void	init_signals(t_philo *data)
+void	init_signals(pthread_mutex_t **mutex, int num)
 {
 	int	i;
 
 	i = -1;
-	data->signal = malloc(sizeof(pthread_mutex_t) * 9);
-	if (!data->signal)
+	*mutex = malloc(sizeof(pthread_mutex_t) * num);
+	if (!*mutex)
 		return (errorlog("malloc"));
-	while (++i < 9)
-		pthread_mutex_init(&data->signal[i], NULL);
+	while (++i < num)
+		pthread_mutex_init(&(*mutex)[i], NULL);
 }
