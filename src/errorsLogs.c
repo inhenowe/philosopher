@@ -25,10 +25,17 @@ void	errorlog(char *error)
 void	free_all(t_philo *data)
 {
 	int	i;
+	int	j;
 
 	i = -1;
+	j = 0;
 	while (++i < data->num_philo)
+	{
 		pthread_mutex_destroy(&data->forks[i]);
+		if (j < 5)
+			pthread_mutex_destroy(&data->th[i].mutex_5[j++]);
+		free(data->th[i].mutex_5);
+	}
 	free(data->th);
 	free(data->forks);
 }

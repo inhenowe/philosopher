@@ -14,7 +14,6 @@
 
 static void	initdata(t_philo *data);
 static void	init_philosophers(t_philo *data);
-// void		mute_all(t_philo *data);
 
 int	main(int argc, char *argv[])
 {
@@ -80,18 +79,12 @@ static void	init_philosophers(t_philo *data)
 	}
 }
 
-// void	mute_all(t_philo *data)
-// {
-// 	int	i;
+unsigned long	mutexcopyl(pthread_mutex_t *mutex, unsigned long var)
+{
+	unsigned long	i;
 
-// 	i = -1;
-// 	while (++i < data->num_philo)
-// 		pthread_mutex_lock(&data->forks[i]);
-// 	pthread_mutex_lock(&data->write);
-// 	pthread_mutex_lock(&data->var);
-// 	i = -1;
-// 	while (++i < data->num_philo)
-// 		pthread_mutex_unlock(&data->forks[i]);
-// 	pthread_mutex_unlock(&data->write);
-// 	pthread_mutex_unlock(&data->var);
-// }
+	pthread_mutex_lock(mutex);
+	 i = var;
+	pthread_mutex_unlock(mutex);
+	return (i);
+}

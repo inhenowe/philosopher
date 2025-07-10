@@ -14,8 +14,8 @@
 
 void	activate_dead(t_philo *data, int i)
 {
-	if ((get_time() - data->th[i].time_eat) >= (unsigned long)data->time_die_ms 
-			&& !data->th[i].full)
+	if ((get_time() - mutexcopyl(&data->th[i].mutex_5[T_EA] , data->th[i].time_eat) >= (unsigned long)data->time_die_ms 
+			&& !data->th[i].full))
 	{
 		mutextrue(&data->dead, &data->dead_man);	
  		mutexprint(&data->th[i], MS5);
@@ -45,7 +45,6 @@ void	one_case(t_philo *data)
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philo);
 	if (!data->forks)
 		return (free(data->th), errorlog("malloc"));
-
 	while (++i < data->num_philo)
 		pthread_mutex_init(&data->forks[i], NULL);
 	i = -1;
@@ -70,7 +69,7 @@ void	*rutone(void *param)
 	printf(B_M"%lu 1 has taken a fork\n"R, get_time() - data->data->time);
 	while ((get_time() - data->data->time) < (unsigned long)data->data->time_die_ms)
 		;
-	printf(B_R"%lu 1 died\n"R, get_time() - data->data->time);
+	printf("%lu 1 died\n", get_time() - data->data->time);
 	pthread_mutex_unlock(&data->data->forks[0]);
 	return (NULL);
 }
