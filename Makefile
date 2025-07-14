@@ -70,10 +70,8 @@ CC = cc
 CFLAGS = -g -Wall -Werror -Wextra
 INCFLAGS = -I$(HEADER)
 HELGRIND = valgrind --tool=helgrind --history-level=approx -s
+DELGRIND = valgrind --tool=drd
 #===================================================================================#
-x = 0
-y = 0
-
 
 all:$(NAME)
 

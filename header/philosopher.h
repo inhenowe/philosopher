@@ -107,10 +107,10 @@ void			*scan_cycle(void *param);
 void			init_signals(pthread_mutex_t **mutex, int num);
 void			mutexiter(pthread_mutex_t *mutex, int *var);
 void			mutextrue(pthread_mutex_t *mutex, t_bool *var);
-t_bool			mutexcopyb(pthread_mutex_t *mutex, t_bool var);
-int				mutexcopyi(pthread_mutex_t *mutex, int var);
+t_bool			mutexcopyb(pthread_mutex_t *mutex, t_bool *var);
+int				mutexcopyi(pthread_mutex_t *mutex, int *var);
 void			mutexprint(t_platon *phl, const char *msg);
-unsigned long	mutexcopyl(pthread_mutex_t *mutex, unsigned long var);
+unsigned long	mutexcopyl(pthread_mutex_t *mutex, unsigned long *var);
 
 //errors_and_free
 void			errorlog(char *error);

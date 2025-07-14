@@ -14,8 +14,7 @@
 
 void	activate_dead(t_philo *data, int i)
 {
-	if ((get_time() - mutexcopyl(&data->th[i].mutex_5[T_EA] , data->th[i].time_eat) >= (unsigned long)data->time_die_ms 
-			&& !data->th[i].full))
+	if ((get_time() - mutexcopyl(&data->th[i].mutex_5[T_EA], &data->th[i].time_eat) >= (unsigned long)data->time_die_ms))
 	{
 		mutextrue(&data->dead, &data->dead_man);	
  		mutexprint(&data->th[i], MS5);
@@ -24,14 +23,14 @@ void	activate_dead(t_philo *data, int i)
 
 void	activate_all_eat(t_philo *data, int i)
 {
-	if (mutexcopyb(&data->th[i].mutex_5[FULL],  data->th[i].full) &&
-			!mutexcopyb(&data->th[i].mutex_5[FLAG],  data->th[i].check))
+	if (mutexcopyb(&data->th[i].mutex_5[FULL],  &data->th[i].full) &&
+			!mutexcopyb(&data->th[i].mutex_5[FLAG],  &data->th[i].check))
 	{
 		mutextrue(&data->th[i].mutex_5[FLAG], &data->th[i].check);
 		data->full_count++;
 	}
-	if (data->full_count == data->num_philo)
-		data->all_eat = TRUE;
+	if (data->full_count == mutexcopyi(&data->write, &data->num_philo))
+		mutextrue(&data->write, &data->all_eat);
 }
 
 void	one_case(t_philo *data)

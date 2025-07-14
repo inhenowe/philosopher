@@ -33,22 +33,22 @@ void	mutextrue(pthread_mutex_t *mutex, t_bool *var)
 	pthread_mutex_unlock(mutex);
 }
 
-t_bool	mutexcopyb(pthread_mutex_t *mutex, t_bool var)
+t_bool	mutexcopyb(pthread_mutex_t *mutex, t_bool *var)
 {
 	t_bool dead;
 
 	pthread_mutex_lock(mutex);
-	dead = var;
+	dead = *var;
 	pthread_mutex_unlock(mutex);
 	return(dead);
 }
 
-int	mutexcopyi(pthread_mutex_t *mutex, int var)
+int	mutexcopyi(pthread_mutex_t *mutex, int *var)
 {
 	int	i;
 
 	pthread_mutex_lock(mutex);
-	 i = var;
+	 i = *var;
 	pthread_mutex_unlock(mutex);
 	return (i);
 }
