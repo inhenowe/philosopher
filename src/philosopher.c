@@ -84,7 +84,7 @@ unsigned long	mutexcopyl(pthread_mutex_t *mutex, unsigned long *var)
 	unsigned long	i;
 
 	pthread_mutex_lock(mutex);
-	 i = *var;
+	i = *var;
 	pthread_mutex_unlock(mutex);
 	return (i);
 }

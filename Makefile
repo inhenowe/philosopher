@@ -54,7 +54,8 @@ OBJSD = ./OBJ
 #=======================================#
 
 # Archivos fuente y crear objetos   ====================#
-FILES = $(addprefix $(SOURCE)/,	assets.c\
+FILES = $(addprefix $(SOURCE)/,	aux.c\
+								assets.c\
 								algoritm.c\
 								ArgCheck.c\
 								utilities.c\
@@ -82,7 +83,7 @@ $(NAME) : $(OBJS)
 $(OBJSD)/%.o : $(SOURCE)/%.c | $(OBJSD)
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@OBJCOUNT=$$(ls $(OBJSD) | wc -l); \
-	PERCENT=$$((($$OBJCOUNT * 100)/7)); \
+	PERCENT=$$((($$OBJCOUNT * 100)/8)); \
 	echo "$(B_MAGENTA)🛠️ [$$PERCENT%]Compiling $< to $@ 🛠️$(RESET)"
 	@sleep 0.2
 

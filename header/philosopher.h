@@ -37,11 +37,11 @@
 Sleep:x Musteat:x"
 # define MA2 "Error\nPlease only positive numbers as values"
 # define MA3 "Error\nNumber of philosopher wrong"
-# define MS1 B_M"%lu %i has taken a fork\n"R
-# define MS2 B_G"%lu %i is eating\n"R
-# define MS3 B_C"%lu %i is sleeping\n"R
-# define MS4 B_Y"%lu %i is thinking\n"R
-# define MS5 B_R"%lu %i died\n"R
+# define MS1 "\033[1;35m%lu %i has taken a fork\n\033[0m"
+# define MS2 "\033[1;32m%lu %i is eating\n\033[0m"
+# define MS3 "\033[1;36m%lu %i is sleeping\n\033[0m"
+# define MS4 "\033[1;33m%lu %i is thinking\n\033[0m"
+# define MS5 "\033[1;31m%lu %i died\n\033[0m"
 
 /*-------mutex_5-------*/
 # define EA_C 0
@@ -105,6 +105,7 @@ void			*rutone(void *param);
 void			*routine(void *param);
 void			*scan_cycle(void *param);
 void			init_signals(pthread_mutex_t **mutex, int num);
+void			take_fork(t_platon *philo, int r_fork, int l_fork);
 void			mutexiter(pthread_mutex_t *mutex, int *var);
 void			mutextrue(pthread_mutex_t *mutex, t_bool *var);
 t_bool			mutexcopyb(pthread_mutex_t *mutex, t_bool *var);

@@ -24,8 +24,8 @@ void	*routine(void *param)
 	while (!mutexcopyb(&philo->data->dead, &philo->data->dead_man))
 	{
 		act_of_eat(philo);
-		if (mutexcopyi(&philo->mutex_5[EA_C], &philo->eat_check) ==
-				mutexcopyi(&philo->data->dead, &philo->data->must_eat))
+		if (mutexcopyi(&philo->mutex_5[EA_C], &philo->eat_check)
+			== mutexcopyi(&philo->data->dead, &philo->data->must_eat))
 		{
 			mutextrue(&philo->mutex_5[FULL], &philo->full);
 			break ;
@@ -44,26 +44,9 @@ static void	act_of_eat(t_platon *philo)
 	int	r_fork;
 
 	l_fork = philo->id - 1;
-	r_fork = philo->id % mutexcopyi(&philo->data->write, &philo->data->num_philo);
-	if ((philo->id % 2) == 0)
-	{
-		usleep(1000);
-		pthread_mutex_lock(&philo->data->forks[l_fork]);
-		if (!mutexcopyb(&philo->data->dead, &philo->data->dead_man))
-			mutexprint(philo, MS1);
-		pthread_mutex_lock(&philo->data->forks[r_fork]);
-		if (!mutexcopyb(&philo->data->dead, &philo->data->dead_man))
-			mutexprint(philo, MS1);
-	}
-	else if ((philo->id % 2) != 0 )
-	{
-		pthread_mutex_lock(&philo->data->forks[r_fork]);
-		if (!mutexcopyb(&philo->data->dead, &philo->data->dead_man))
-			mutexprint(philo, MS1);
-		pthread_mutex_lock(&philo->data->forks[l_fork]);
-		if (!mutexcopyb(&philo->data->dead, &philo->data->dead_man))
-			mutexprint(philo, MS1);
-	}
+	r_fork = philo->id
+		% mutexcopyi(&philo->data->write, &philo->data->num_philo);
+	take_fork(philo, r_fork, l_fork);
 	eating(philo);
 	if ((philo->id % 2) == 0)
 	{
@@ -114,13 +97,13 @@ void	*scan_cycle(void *param)
 		{
 			if (mutexcopyi(&data->dead, &data->must_eat) != -1)
 				activate_all_eat(data, i);
-			if (!mutexcopyb(&data->dead, &data->dead_man) &&
-					!mutexcopyb(&data->th[i].mutex_5[FULL],  &data->th[i].full) &&
-					!mutexcopyb(&data->th[i].mutex_5[SAVE],  &data->th[i].save))
+			if (!mutexcopyb(&data->dead, &data->dead_man)
+				&& !mutexcopyb(&data->th[i].mutex_5[FULL], &data->th[i].full)
+				&& !mutexcopyb(&data->th[i].mutex_5[SAVE], &data->th[i].save))
 				activate_dead(data, i);
 		}
-		if (mutexcopyb(&data->dead, &data->dead_man) ||
-				mutexcopyb(&data->write, &data->all_eat))
+		if (mutexcopyb(&data->dead, &data->dead_man)
+			|| mutexcopyb(&data->write, &data->all_eat))
 			break ;
 		usleep(1000);
 	}

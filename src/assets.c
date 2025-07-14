@@ -14,17 +14,18 @@
 
 void	activate_dead(t_philo *data, int i)
 {
-	if ((get_time() - mutexcopyl(&data->th[i].mutex_5[T_EA], &data->th[i].time_eat) >= (unsigned long)data->time_die_ms))
+	if ((get_time() - mutexcopyl(&data->th[i].mutex_5[T_EA],
+				&data->th[i].time_eat) >= (unsigned long)data->time_die_ms))
 	{
-		mutextrue(&data->dead, &data->dead_man);	
- 		mutexprint(&data->th[i], MS5);
+		mutextrue(&data->dead, &data->dead_man);
+		mutexprint(&data->th[i], MS5);
 	}
 }
 
 void	activate_all_eat(t_philo *data, int i)
 {
-	if (mutexcopyb(&data->th[i].mutex_5[FULL],  &data->th[i].full) &&
-			!mutexcopyb(&data->th[i].mutex_5[FLAG],  &data->th[i].check))
+	if (mutexcopyb(&data->th[i].mutex_5[FULL], &data->th[i].full)
+		&& !mutexcopyb(&data->th[i].mutex_5[FLAG], &data->th[i].check))
 	{
 		mutextrue(&data->th[i].mutex_5[FLAG], &data->th[i].check);
 		data->full_count++;
@@ -63,10 +64,11 @@ void	*rutone(void *param)
 {
 	t_platon	*data;
 
-	data = (t_platon*)param;
+	data = (t_platon *)param;
 	pthread_mutex_lock(&data->data->forks[0]);
 	printf(B_M"%lu 1 has taken a fork\n"R, get_time() - data->data->time);
-	while ((get_time() - data->data->time) < (unsigned long)data->data->time_die_ms)
+	while ((get_time() - data->data->time)
+		< (unsigned long)data->data->time_die_ms)
 		;
 	printf("%lu 1 died\n", get_time() - data->data->time);
 	pthread_mutex_unlock(&data->data->forks[0]);
