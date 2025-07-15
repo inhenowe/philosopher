@@ -14,6 +14,7 @@
 
 static t_bool	is_real_num(char **nums, t_philo *data);
 static void		charge_nums(char **nums, t_philo *data);
+static int		ft_strlen(char *str);
 
 t_bool	argcheck(int argc, char **spl, t_philo *data)
 {
@@ -33,10 +34,16 @@ static t_bool	is_real_num(char **nums, t_philo *data)
 	j = -1;
 	while (nums[++i])
 	{
+		if (ft_strlen(nums[i]) == 0)
+			return (errorlog(MA2), TRUE);
+		if (ft_strlen(nums[i]) > 10)
+			return (errorlog("Error\nNumber too big"), TRUE);
 		j = -1;
 		while (nums[i][++j])
+		{
 			if (nums[i][j] < '0' || nums[i][j] > '9')
 				return (errorlog(MA2), TRUE);
+		}
 	}
 	charge_nums(nums, data);
 	if (data->num_philo > 200)
@@ -54,4 +61,14 @@ static void	charge_nums(char **nums, t_philo *data)
 	data->time_nap_ms = ft_atol(nums[3]);
 	if (nums[4])
 		data->must_eat = ft_atol(nums[4]);
+}
+
+static int	ft_strlen(char *str)
+{
+	int	ctu_str;
+
+	ctu_str = 0;
+	while (str[ctu_str] != 0)
+		ctu_str++;
+	return (ctu_str);
 }

@@ -41,7 +41,7 @@ Sleep:x Musteat:x"
 # define MS2 "\033[1;32m%lu %i is eating\n\033[0m"
 # define MS3 "\033[1;36m%lu %i is sleeping\n\033[0m"
 # define MS4 "\033[1;33m%lu %i is thinking\n\033[0m"
-# define MS5 "\033[1;31m%lu %i died\n\033[0m"
+# define MS5 "%lu %i died\n"
 
 /*-------mutex_5-------*/
 # define EA_C 0
